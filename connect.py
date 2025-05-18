@@ -109,14 +109,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
         if (joyROV.B == 1):
             scale = 0.25
         MESSAGE = (
-            str(joyROV.LeftJoystickX * scale) + " " +
             str(joyROV.LeftJoystickY * scale) + " " +
+            str(joyROV.LeftJoystickX * scale) + " " +
             str((joyROV.RightTrigger - joyROV.LeftTrigger) / 4.0 * scale) + " " +
-            str((joyROV.RightBumper - joyROV.LeftBumper) * scale) + " " +
-            str(joyROV.RightJoystickY * 0.66 *scale) + " " +
             str(joyROV.RightJoystickX * 0.66 * scale) + " " +
-            str(round(pow(joyClaw.RightJoystickY * -1, 3), 1) * scale) + " " +
-            str(round(pow(joyClaw.RightJoystickX * 0.75, 3), 1) * scale)
+            str(joyROV.RightJoystickY * 0.66 *scale) + " " +
+            str((joyROV.RightBumper - joyROV.LeftBumper) * scale) + " " +
+            str(round(joyClaw.RightJoystickY, 1) * scale) + " " +
+            str(round(joyClaw.RightJoystickX, 1) * scale)
         )
         #os.system("clear")
         print(
@@ -127,7 +127,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
             "Pitch: {:.2f}".format(joyROV.RightJoystickY),
             "Yaw: {:.2f}".format(joyROV.RightJoystickX),
             "Claw Pitch: {:.1f}".format(pow(joyClaw.RightJoystickY * -1, 3)),
-            "Claw Yaw: {:.1f}".format(pow(joyClaw.RightJoystickX * 0.75, 3))
+            "Claw Yaw: {:.1f}".format(joyClaw.RightJoystickX)
         )
         sock.sendto(MESSAGE.encode(), (SERVER_IP, SERVER_PORT))
         #print(f"Sent: {MESSAGE}")
