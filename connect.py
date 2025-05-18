@@ -10,28 +10,27 @@ class XboxController(object):
     MAX_JOY_VAL = math.pow(2, 15)
 
     def __init__(self, gamepad):
-        self.controller = moto_proto_pb2.ControllerInput()
         self.gamepad = gamepad
-        self.controller.LeftJoystickY = 0
-        self.controller.LeftJoystickX = 0
-        self.controller.RightJoystickY = 0
-        self.controller.RightJoystickX = 0
-        self.controller.LeftTrigger = 0
-        self.controller.RightTrigger = 0
-        self.controller.LeftBumper = 0
-        self.controller.RightBumper = 0
-        self.controller.A = 0
-        self.controller.X = 0
-        self.controller.Y = 0
-        self.controller.B = 0
-        self.controller.LeftThumb = 0
-        self.controller.RightThumb = 0
-        self.controller.Back = 0
-        self.controller.Start = 0
-        self.controller.LeftDPad = 0
-        self.controller.RightDPad = 0
-        self.controller.UpDPad = 0
-        self.controller.DownDPad = 0
+        self.LeftJoystickY = 0
+        self.LeftJoystickX = 0
+        self.RightJoystickY = 0
+        self.RightJoystickX = 0
+        self.LeftTrigger = 0
+        self.RightTrigger = 0
+        self.LeftBumper = 0
+        self.RightBumper = 0
+        self.A = 0
+        self.X = 0
+        self.Y = 0
+        self.B = 0
+        self.LeftThumb = 0
+        self.RightThumb = 0
+        self.Back = 0
+        self.Start = 0
+        self.LeftDPad = 0
+        self.RightDPad = 0
+        self.UpDPad = 0
+        self.DownDPad = 0
 
         self._monitor_thread = threading.Thread(target=self._monitor_controller, args=())
         self._monitor_thread.daemon = True
