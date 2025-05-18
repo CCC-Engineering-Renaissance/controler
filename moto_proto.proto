@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+message ControllerInput {
+	float LeftJoystickY = 1;
+	float LeftJoysitckX = 2;
+	float RightJoystickY = 3;
+	float RightJoystickX = 4;
+	float LeftTrigger = 5;
+	float LeftBumper = 6;
+	float RightBumper = 7;
+	float A = 8;
+	float X = 9;
+	float Y = 10;
+	float B = 11;
+	float LeftThumb = 12;
+	float RightThumb = 13;
+	float Back = 14;
+	float Start = 15;
+	float LeftDPad = 16;
+	float RightDPad = 17;
+	float UpDPad = 18;
+	float DownDPad = 19;
+}
+
+message Thrusters {
+	message Pos {
+		float normX = 1;
+		float normY = 2;
+		float normZ = 3;
+		float distX = 4;
+		float distY = 5;
+		float distZ = 6;
+	}
+	
+	Pos T1 = 1;
+	Pos T2 = 2;
+	Pos T3 = 3;
+	Pos T4 = 4;
+	Pos T5 = 5;
+	Pos T6 = 6;
+	Pos T7 = 7;
+	Pos T8 = 8;
+
+	float MaxPowT1 = 9;
+	float MaxPowT2 = 10;
+	float MaxPowT3 = 11;
+	float MaxPowT4 = 12;
+	float MaxPowT5 = 13;
+	float MaxPowT6 = 14;
+	float MaxPowT7 = 15;
+	float MaxPowT8 = 16;
+}
