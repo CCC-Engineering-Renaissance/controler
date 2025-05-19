@@ -11,8 +11,16 @@ python3 -m venv .venv
 ```
 source .venv/bin/activate
 ```
-## Windows:
+## Windows (idk):
 ```
-./.venv/bin
-##
+./.venv/bin/activate.sh
+```
+## Installing Libraries
+```
+python3 -m pip install -r requirements.txt
+```
+## Connecting to Raspberry Pi
+```
+python3 connect.py
+```
 
