@@ -95,6 +95,7 @@ SERVER_IP = '192.168.8.117'  # or your server's IP
 SERVER_PORT = 12345
 
 joyROV = XboxController(devices.gamepads[0])
+joyClaw = XboxController(devices.gamepads[1])
 
 # Create a UDP socket
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
@@ -102,20 +103,20 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
 
     # Send message to server
     while True:
-        scale =1.0 
+        scale =0.5 
         if (joyROV.A == 1):
-            scale = 0.5
+            scale = 1.0
         if (joyROV.B == 1):
             scale = 0.25
         MESSAGE = (
             str(joyROV.LeftJoystickY * scale) + " " +
             str(joyROV.LeftJoystickX * scale) + " " +
-            str((joyROV.RightTrigger - joyROV.LeftTrigger) / 4.0 * scale) + " " +
-            str(joyROV.RightJoystickX * 0.66 * scale) + " " +
-            str(joyROV.RightJoystickY * 0.66 *scale) + " " +
-            str((joyROV.RightBumper - joyROV.LeftBumper) * scale) + " " +
-            str(round(joyClaw.RightJoystickY, 1) * scale) + " " +
-            str(round(joyClaw.RightJoystickX, 1) * scale)
+            str((joyROV.RightTrigger - joyROV.LeftTrigger) / -3.0 * scale) + " " +
+            str(joyROV.RightJoystickX * 0.66 * scale * 2) + " " +
+            str(joyROV.RightJoystickY * 0.66 *scale * 2) + " " +
+            str((joyROV.RightBumper - joyROV.LeftBumper) * -2 * scale) + " " +
+            str(round(pow(joyClaw.RightJoystickY, 3), 1) * 0.60) + " " +
+            str(round(pow(joyClaw.LeftJoystickY, 3), 1) * 0.8)
         )
         #os.system("clear")
         print(
@@ -126,7 +127,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
             "Pitch: {:.2f}".format(joyROV.RightJoystickY),
             "Yaw: {:.2f}".format(joyROV.RightJoystickX),
             "Claw Pitch: {:.1f}".format(pow(joyClaw.RightJoystickY * -1, 3)),
-            "Claw Yaw: {:.1f}".format(joyClaw.RightJoystickX)
+            "Claw Yaw: {:.1f}".format(joyClaw.LeftJoystickY)
         )
         sock.sendto(MESSAGE.encode(), (SERVER_IP, SERVER_PORT))
         #print(f"Sent: {MESSAGE}")
