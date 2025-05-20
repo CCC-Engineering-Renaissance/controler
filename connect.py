@@ -115,7 +115,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
             str(joyROV.RightJoystickX * 0.66 * scale * 2) + " " +
             str(joyROV.RightJoystickY * 0.66 *scale * 2) + " " +
             str((joyROV.RightBumper - joyROV.LeftBumper) * -2 * scale) + " " +
-            str(round(pow(joyClaw.RightJoystickY, 3), 1) * 0.60) + " " +
+            str(round(pow(joyClaw.RightJoystickY, 3), 1) * 0.20) + " " +
             str(round(pow(joyClaw.LeftJoystickY, 3), 1) * 0.8)
         )
         #os.system("clear")
