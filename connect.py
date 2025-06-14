@@ -111,12 +111,15 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
         MESSAGE = (
             str(joyROV.LeftJoystickY * scale) + " " +
             str(joyROV.LeftJoystickX * scale) + " " +
-            str((joyROV.RightTrigger - joyROV.LeftTrigger) / -3.0 * scale) + " " +
+            str((joyROV.RightTrigger - joyROV.LeftTrigger) / -4.0 * scale) + " " +
             str(joyROV.RightJoystickX * 0.66 * scale * 2) + " " +
             str(joyROV.RightJoystickY * 0.66 *scale * 2) + " " +
-            str((joyROV.RightBumper - joyROV.LeftBumper) * -2 * scale) + " " +
-            str(round(pow(joyClaw.RightJoystickY, 3), 1) * 0.20) + " " +
-            str(round(pow(joyClaw.LeftJoystickY, 3), 1) * 0.8)
+            str((joyROV.RightBumper - joyROV.LeftBumper) * -1 * scale) + " " +
+            str(joyClaw.RightJoystickY * 1.0) + " " +
+            str(joyClaw.LeftJoystickY * 3) + " " +
+            str(round(pow(joyClaw.RightJoystickX, 3), 1) * 0.80) + " " +
+            str(round(pow(joyClaw.LeftJoystickX, 3), 1) * 0.8)  + " " + 
+            str(round(pow(joyClaw.RightBumper - joyClaw.LeftBumper, 3), 1) * 0.8)
         )
         #os.system("clear")
         print(

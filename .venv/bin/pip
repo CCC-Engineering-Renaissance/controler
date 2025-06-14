@@ -1,4 +1,4 @@
-#!/home/jjorjk/controler/.venv/bin/python3
+#!/home/Julian/Projects/controler/.venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
