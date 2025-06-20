@@ -97,29 +97,68 @@ SERVER_PORT = 12345
 joyROV = XboxController(devices.gamepads[0])
 joyClaw = XboxController(devices.gamepads[1])
 
+pushed = False
+
 # Create a UDP socket
 with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
     sock.settimeout(2.0)  # Optional: timeout in seconds
+    pitchAngle = 0;
+    yawAngle = 0;
+    als = False
+    test = 0
 
-    # Send message to server
+    # Send message to serve
     while True:
+        if als:
+            pitchAngle += pow(joyROV.RightJoystickY, 3) * .001 ;
+            yawAngle += pow(joyROV.RightJoystickX, 3) * .001 ;
+
+        if (pushed == True and joyROV.Y == 0):
+            als = not als
+
+        if (joyROV.Y == 1):
+            pushed = True
+        else:
+            pushed = False
+
+        out = 0
+        if als:
+            out = 1
+
+
+
+        if pitchAngle < -180:
+            pichAngle = 180
+        elif pitchAngle > 180:
+            pitchAngle = -180
+
         scale =0.5 
         if (joyROV.A == 1):
             scale = 1.0
         if (joyROV.B == 1):
             scale = 0.25
+        if (joyROV.X == 1):
+            scale = 1.5
         MESSAGE = (
-            str(joyROV.LeftJoystickY * scale) + " " +
-            str(joyROV.LeftJoystickX * scale) + " " +
-            str((joyROV.RightTrigger - joyROV.LeftTrigger) / -4.0 * scale) + " " +
-            str(joyROV.RightJoystickX * 0.66 * scale * 2) + " " +
+            str(joyROV.LeftJoystickY * scale * 1.5) + " " +
+            str(joyROV.LeftJoystickX * scale * -1) + " " +
+            str((joyROV.RightTrigger - joyROV.LeftTrigger) / -3.0 * scale) + " " +
+            str(joyROV.RightJoystickX * 0.66 * scale * -2) + " " +
             str(joyROV.RightJoystickY * 0.66 *scale * 2) + " " +
-            str((joyROV.RightBumper - joyROV.LeftBumper) * -1 * scale) + " " +
-            str(joyClaw.RightJoystickY * 1.0) + " " +
-            str(joyClaw.LeftJoystickY * 3) + " " +
-            str(round(pow(joyClaw.RightJoystickX, 3), 1) * 0.80) + " " +
-            str(round(pow(joyClaw.LeftJoystickX, 3), 1) * 0.8)  + " " + 
-            str(round(pow(joyClaw.RightBumper - joyClaw.LeftBumper, 3), 1) * 0.8)
+            str((joyROV.RightBumper - joyROV.LeftBumper) * 1 * scale) + " " +
+           # str(round(pow(joyClaw.RightJoystickY, 3), 1) * .3) + " " +
+           # str(round(pow(joyClaw.LeftJoystickY, 3), 1) * 0.8) + " " +
+           # str(round(pow(joyClaw.RightJoystickX, 3), 1) * 0.2) + " " +
+           # str(round(pow(joyClaw.LeftJoystickX, 3), 1) * 0.5)   
+
+            str(round(joyClaw.RightJoystickY, 1) * .4) + " " +
+            str(int(joyClaw.B) - int(joyClaw.A) * 1.4 ) + " " +
+           # str(round(pow(joyClaw.RightJoystickX, 3), 1) * 0.15) + " " +
+            str(round(pow(0, 3), 1) * 0.15) + " " +
+            str((pow(joyClaw.LeftJoystickY, 3)) * -0.25) + " " +
+            str(pitchAngle) + " " + 
+            str(yawAngle) + " " + 
+            str(out)
         )
         #os.system("clear")
         print(
@@ -130,7 +169,12 @@ with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
             "Pitch: {:.2f}".format(joyROV.RightJoystickY),
             "Yaw: {:.2f}".format(joyROV.RightJoystickX),
             "Claw Pitch: {:.1f}".format(pow(joyClaw.RightJoystickY * -1, 3)),
-            "Claw Yaw: {:.1f}".format(joyClaw.LeftJoystickY)
+            "Claw Yaw: {:.1f}".format(joyClaw.RightTrigger - joyClaw.LeftTrigger),
+            "Claw2 Open: {:.1f}".format(joyClaw.RightJoystickX),
+            "Claw Yaw: {:.1f}".format(joyClaw.LeftJoystickX),
+            "Angle: {:.1f}".format(pitchAngle),
+            "Angle: {:.1f}".format(yawAngle),
+            als
         )
         sock.sendto(MESSAGE.encode(), (SERVER_IP, SERVER_PORT))
         #print(f"Sent: {MESSAGE}")
